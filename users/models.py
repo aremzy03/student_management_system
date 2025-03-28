@@ -20,15 +20,15 @@ class StaffProfile(models.Model):
     email = models.EmailField(unique=True)
     profilepic = models.ImageField(upload_to=None)
 
-    class Meta:
-        roles = ["Teacher", "Admin"]
+    # class Meta:
+    #     roles = ["Teacher", "Admin"]
 
     def __str__(self):
         return f"Staff: {self.name}"
 
 
 class Attendance(models.Model):
-    student = models.OneToOneField(StudentProfile)
+    student = models.OneToOneField(StudentProfile, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     status = models.TextChoices("Present", "Absent")
 
