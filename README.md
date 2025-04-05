@@ -56,6 +56,75 @@ Follow these steps to set up the project on your local machine:
 		```
 		./manage.py runserver
 		```		
+
+### Usage
+1. user registration
+url ``` http://127.0.0.1:8000/users/login/ ```
+http request ``` POST ```
+json data
+```
+	{
+		"username" : "test2",
+		"email" : "test@example.com",
+		"password" : "userpasstest"
+	}
+```
+
+2. user login
+url ``` http://127.0.0.1:8000/users/login/ ```
+http request ``` POST ```
+json data
+```
+	{
+		"username" : "test2",
+		"password" : "userpasstest"
+	}
+``` 
+
+3. create student and/or staff profile
+url ``` http://127.0.0.1:8000/users/teachers/ ```
+http request ``` POST ```
+json data
+```
+	{
+		"name" : "John Doe",
+		"email" : "test@example.com",
+		"profile": "http://127.0.0.1:8000/profile_pics/IMG_20250210_191919_034.webp"
+		"user": "3"
+	}
+```
+
+4. create course
+url ```  ```
+http request ``` POST ```
+json data
+```
+	{
+		"name": "mathematics",
+		"coursecontent": "This is the course content"
+	}
+```
+
+5. enroll
+url ``` ```
+http request ``` POST ```
+json data
+```
+	{
+
+	}
+```
+
+6. list enrolled
+url ``` ```
+http request ``` GET ```
+json data
+```
+	{
+		
+	}
+```
+
 ### Contact
 
 For any questions or suggestions, please open an issue or contact the project maintainer at aremzy2018@gmail.com.

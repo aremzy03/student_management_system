@@ -16,8 +16,8 @@ urlpatterns = [
     path('login/', UserLogin.as_view(), name='user-login'),
     
     #Teacher CRUD
-    path('student/create', CreateStudentProfile.as_view(), name='create-student'),
-    path('teacher/create', CreateStaffProfile.as_view(), name='create-staff'),
+    path('student/create/', CreateStudentProfile.as_view(), name='create-student'),
+    path('teacher/create/', CreateStaffProfile.as_view(), name='create-staff'),
     path('', include(router.urls)),
     
 ]

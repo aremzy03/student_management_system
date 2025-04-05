@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 
 from users.views import IsTeacher
@@ -14,12 +15,13 @@ from .serializers import CoursesSerializer, ResultsSerializer, EnrollmentSeriali
 class CourseViews(ModelViewSet):
     queryset = Courses.objects.all()
     serializer_class = CoursesSerializer
-    permission_classes = [IsAuthenticated,IsTeacher]
+    authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsTeacher]
 
 class EnrollCourse(generics.CreateAPIView):
     queryset = Enroll.objects.all()
     serializer_class = EnrollmentSerializer
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     
     def create(self, request, *args, **kwargs):
         student = StudentProfile.objects.get(user=request.user)
@@ -32,7 +34,7 @@ class EnrollCourse(generics.CreateAPIView):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 class ViewEnrolledCourses(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     serializer_class = EnrollmentSerializer
     
     def get_queryset(self):
@@ -41,7 +43,7 @@ class ViewEnrolledCourses(generics.ListAPIView):
         return Enroll.objects.get(student=student)
 
 class Unenroll(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     serializer_class = EnrollmentSerializer
     
     def get_queryset(self):

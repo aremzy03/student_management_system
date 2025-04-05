@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth import authenticate
 from rest_framework import generics
 from rest_framework import mixins
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
@@ -24,12 +25,12 @@ class RegisterView(generics.CreateAPIView):
     
     def post(self, request, *args, **kwargs):
         serializer = UserRegisterSerializer(data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             user = serializer.save()
             token, _ = Token.objects.get_or_create(user=user)
             
-            return Response({'message':'User registration successfully', 'Token': token}, status.HTTP_201_CREATED)
-        return ResourceWarning(serializer.errors, status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'User registration successfully', 'token': token.key}, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(APIView):
@@ -41,7 +42,7 @@ class UserLogin(APIView):
         user = authenticate(username=username, password=password)
         
         if user:
-            token = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
             return Response({'message':'User logged in successfully', 'token':token.key}, status.HTTP_200_OK)
         return Response({'error':'Invalid Credentials'}, status.HTTP_400_BAD_REQUEST)
 
@@ -63,12 +64,12 @@ class IsTeacher(IsAuthenticated):
         IsAuthenticated (_type_): _description_
     """
     def has_permission(self, request, view):
-        get_staff = StaffProfile.objects.filter
-        return bool(request.user and get_staff(user=request.user))
+        get_staff = StaffProfile.objects.filter(user=request.user)
+        return bool(request.user and get_staff)
 
 #Teacher and Student APIview
 class CreateStudentProfile(generics.CreateAPIView):
-    authentication_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = StudentProfile.objects.all()
     serializer_class = StaffProfileSerializer
     
@@ -76,7 +77,7 @@ class CreateStudentProfile(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class CreateStaffProfile(generics.CreateAPIView):
-    authentication_classes = [IsAuthenticated,IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = StaffProfile.objects.all()
     serializer_class = StaffProfileSerializer
     
@@ -84,12 +85,12 @@ class CreateStaffProfile(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class StudentModelView(ModelViewSet):
-    authentication_classes = [IsAuthenticated,IsTeacher]
+    authentication_classes = [TokenAuthentication ,IsTeacher]
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
 
 class TeacherModelView(ModelViewSet):
-    authentication_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
     queryset = StaffProfile.objects.all()
     serializer_class = StaffProfileSerializer
 
