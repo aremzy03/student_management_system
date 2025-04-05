@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from .models import StaffProfile, StudentProfile, Attendance
+from courses.serializers import CoursesSerializer
 
 #Serializer classes here
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -25,7 +26,7 @@ class StaffProfileSerializer(serializers.ModelSerializer):
 class StudentProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentProfile
-        fields = '__all__'
+        fields = ['user', 'name', 'email', 'profilepic']
 
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:

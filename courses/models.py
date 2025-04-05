@@ -1,5 +1,4 @@
 from django.db import models
-from users.models import StudentProfile
 
 # Create your models here.
 
@@ -15,9 +14,15 @@ class Results(models.Model):
 
 class Courses(models.Model):
     name = models.CharField(max_length=150)
-    student = models.ManyToManyField(StudentProfile)
     results = models.OneToOneField(Results, on_delete=models.CASCADE)
     coursecontent = models.TextField()
 
     def __str__(self):
         return self.name
+
+class Enroll(models.Model):
+    student = models.ForeignKey('users.StudentProfile', on_delete=models.CASCADE)
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.student} is enrolled into {self.course}"    

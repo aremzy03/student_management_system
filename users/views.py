@@ -33,7 +33,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class UserLogin(APIView):
-    permission_classes = AllowAny
+    permission_classes = [AllowAny]
     
     def post(self, request):
         username = request.data.get('username')
@@ -56,6 +56,12 @@ class UserLogout(APIView):
 
 #Custom Permission Teacher
 class IsTeacher(IsAuthenticated):
+    """Modified has_permission method to check if the user is staff
+    this class only grants permission to the teachers and admin
+
+    Args:
+        IsAuthenticated (_type_): _description_
+    """
     def has_permission(self, request, view):
         get_staff = StaffProfile.objects.filter
         return bool(request.user and get_staff(user=request.user))
@@ -70,7 +76,7 @@ class CreateStudentProfile(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class CreateStaffProfile(generics.CreateAPIView):
-    authentication_classes = [IsAuthenticated]
+    authentication_classes = [IsAuthenticated,IsAuthenticated]
     queryset = StaffProfile.objects.all()
     serializer_class = StaffProfileSerializer
     
@@ -78,7 +84,7 @@ class CreateStaffProfile(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class StudentModelView(ModelViewSet):
-    authentication_classes = [IsTeacher]
+    authentication_classes = [IsAuthenticated,IsTeacher]
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
 
