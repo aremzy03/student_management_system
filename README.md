@@ -59,10 +59,14 @@ Follow these steps to set up the project on your local machine:
 
 ### Usage
 1. user registration
-url ``` http://127.0.0.1:8000/users/register/ ```
-token ``` 127c8ad3f486fddd7c21e818b8dd63414a98eb18 ```
-http request ``` POST ```
-json data
+
+	url ``` http://127.0.0.1:8000/users/register/ ```
+
+	token ``` 127c8ad3f486fddd7c21e818b8dd63414a98eb18 ```
+
+	http request ``` POST ```
+
+	json data
 ```
 	{
 		"username" : "test",
@@ -70,18 +74,21 @@ json data
 		"password" : "userpasstest"
 	}
 
-	token = b4b6118955adcaed9862bb23209c650b5e70d864
 	{
 		"username" : "test2",
 		"email" : "test2@example.com",
 		"password": "user2passtest"
 	}
+
 ```
 
 2. user login
-url ``` http://127.0.0.1:8000/users/login/ ```
-http request ``` POST ```
-json data
+
+	url ``` http://127.0.0.1:8000/users/login/ ```
+
+	http request ``` POST ```
+
+	json data
 ```
 	{
 		"username" : "test",
@@ -93,30 +100,36 @@ json data
 	}
 ``` 
 
-3. create student and/or staff profile
-url ``` http://127.0.0.1:8000/users/teachers/ ```
-http request ``` POST ```
-json data
+3. Create student and/or staff profile
+
+	url ``` http://127.0.0.1:8000/users/teachers/ ```
+
+	http request ``` POST ```
+
+	json data
 ```
 	{
 		"name" : "John Doe",
 		"email" : "test@example.com",
-		"profile": null
+		"profile": null,
 		"user": 1
 	}
 
 	{
 		"name" : "Jane Doe",
 		"email" : "test2@example.com",
-		"profile": null
+		"profile": null,
 		"user": 2
 	}
 ```
 
-4. create course
-url ``` http://127.0.0.1:8000/program/course/ ```
-http request ``` POST ```
-json data
+4. Create course
+
+	url ``` http://127.0.0.1:8000/program/course/ ```
+
+	http request ``` POST ```
+
+	json data
 ```
 	{
 		"name": "mathematics",
@@ -124,10 +137,13 @@ json data
 	}
 ```
 
-5. enroll
-url ``` http://127.0.0.1:8000/courses/enroll/ ```
-http request ``` POST ```
-json data
+5. Enroll
+
+	url ``` http://127.0.0.1:8000/courses/enroll/ ```
+
+	http request ``` POST ```
+
+	json data
 ```
 	{
 		"student": 1,
@@ -135,9 +151,11 @@ json data
 	}
 ```
 
-6. list enrolled
-url ``` http://127.0.0.1:8000/courses/enrolled ```
-http request ``` GET ```
+6. List enrolled courses
+
+	url ``` http://127.0.0.1:8000/courses/enrolled ```
+
+	http request ``` GET ```
 
 ### Contact
 
