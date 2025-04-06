@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -22,6 +23,7 @@ class EnrollCourse(generics.CreateAPIView):
     queryset = Enroll.objects.all()
     serializer_class = EnrollmentSerializer
     authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
     def create(self, request, *args, **kwargs):
         student = StudentProfile.objects.get(user=request.user)
@@ -35,21 +37,23 @@ class EnrollCourse(generics.CreateAPIView):
 
 class ViewEnrolledCourses(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EnrollmentSerializer
     
     def get_queryset(self):
         user = self.request.user
         student = StudentProfile.objects.get(user=user)
-        return Enroll.objects.get(student=student)
+        return Enroll.objects.filter(student=student)
 
 class Unenroll(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EnrollmentSerializer
     
     def get_queryset(self):
         user = self.request.user
         student = StudentProfile.objects.get(user=user)
-        return Enroll.objects.get(student=student)
+        return Enroll.objects.filter(student=student)
 	
 
 

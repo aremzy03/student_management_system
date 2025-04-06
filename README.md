@@ -59,14 +59,22 @@ Follow these steps to set up the project on your local machine:
 
 ### Usage
 1. user registration
-url ``` http://127.0.0.1:8000/users/login/ ```
+url ``` http://127.0.0.1:8000/users/register/ ```
+token ``` 127c8ad3f486fddd7c21e818b8dd63414a98eb18 ```
 http request ``` POST ```
 json data
 ```
 	{
-		"username" : "test2",
+		"username" : "test",
 		"email" : "test@example.com",
 		"password" : "userpasstest"
+	}
+
+	token = b4b6118955adcaed9862bb23209c650b5e70d864
+	{
+		"username" : "test2",
+		"email" : "test2@example.com",
+		"password": "user2passtest"
 	}
 ```
 
@@ -76,8 +84,12 @@ http request ``` POST ```
 json data
 ```
 	{
-		"username" : "test2",
+		"username" : "test",
 		"password" : "userpasstest"
+	}
+	{
+		"username" : "test2",
+		"password": "user2passtest"
 	}
 ``` 
 
@@ -89,13 +101,20 @@ json data
 	{
 		"name" : "John Doe",
 		"email" : "test@example.com",
-		"profile": "http://127.0.0.1:8000/profile_pics/IMG_20250210_191919_034.webp"
-		"user": "3"
+		"profile": null
+		"user": 1
+	}
+
+	{
+		"name" : "Jane Doe",
+		"email" : "test2@example.com",
+		"profile": null
+		"user": 2
 	}
 ```
 
 4. create course
-url ```  ```
+url ``` http://127.0.0.1:8000/program/course/ ```
 http request ``` POST ```
 json data
 ```
@@ -106,24 +125,19 @@ json data
 ```
 
 5. enroll
-url ``` ```
+url ``` http://127.0.0.1:8000/courses/enroll/ ```
 http request ``` POST ```
 json data
 ```
 	{
-
+		"student": 1,
+		"course": 3
 	}
 ```
 
 6. list enrolled
-url ``` ```
+url ``` http://127.0.0.1:8000/courses/enrolled ```
 http request ``` GET ```
-json data
-```
-	{
-		
-	}
-```
 
 ### Contact
 
